@@ -27,6 +27,14 @@ docker-compose exec nodejs npm run dev
 
 You can now connect to `http://localhost:6060/meetups`
 
+## Consumer
+
+To run the consumer you can use
+
+```shell
+docker-compose exec nodejs npm run consumer
+```
+
 ## Linting
 
 Run `docker-compose exec nodejs npm run lint` to check for linting errors.
