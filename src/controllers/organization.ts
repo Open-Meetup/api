@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Organization } from "../model/organization";
 
-const NRP = require("node-redis-pubsub");
+const Redis = require("ioredis");
 
 // @TODO add validation on request body
 export const add = async (
@@ -9,13 +9,10 @@ export const add = async (
   res: Response
 ) => {
   try {
-    const url = process.env.REDIS_URL;
-    const config = {
-      url,
-    };
-    const nrp = new NRP(config);
+    const redis = new Redis(process.env.REDIS_URL);
+    const channel = "organization";
 
-    nrp.emit("create:organzation", { name: req.body.name });
+    redis.publish(channel, req.body.name);
 
     return res.status(201).json();
   } catch (e) {
