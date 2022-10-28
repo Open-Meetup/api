@@ -2,6 +2,7 @@ export interface Community {
   _id: string;
   name: string;
   contractAddress: string; // Address of Community smart contract deployed on chain
+  founderAddress: string;
 }
 
 export interface CommunityPostRequest {

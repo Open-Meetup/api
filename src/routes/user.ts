@@ -3,11 +3,11 @@ import { body, param } from "express-validator";
 import { requireSignature, validate } from "../services/validation";
 import { onlySigned } from "../services/auth";
 import {
-  getByAddress,
+  readByAddress,
   getMessageToSign,
-  add,
+  create,
   remove,
-  edit,
+  update,
 } from "../controllers/user";
 
 const router = express.Router();
@@ -16,7 +16,7 @@ router.get("/message", getMessageToSign);
 router.get(
   "/:wallet",
   validate([param("wallet").notEmpty().bail().isEthereumAddress()]),
-  getByAddress
+  readByAddress
 );
 router.post(
   "/",
@@ -26,7 +26,7 @@ router.post(
     ...requireSignature(),
   ]),
   onlySigned("wallet"),
-  add
+  create
 );
 router.patch(
   "/:wallet",
@@ -37,7 +37,7 @@ router.patch(
     ...requireSignature(),
   ]),
   onlySigned("wallet"),
-  edit
+  update
 );
 router.delete(
   "/:wallet",

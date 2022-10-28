@@ -1,6 +1,6 @@
+import { Web3Provider } from "@ethersproject/providers";
 import { DefenderRelayProvider } from "defender-relay-client/lib/web3";
 import HDWalletProvider from "@truffle/hdwallet-provider";
-import Web3 from "web3";
 import { assertDefined } from "../../utils/invariants";
 
 const { RELAY_API_KEY, RELAY_API_SECRET, GANACHE_SEED, GANACHE_URL } =
@@ -28,4 +28,4 @@ if (process.env.NODE_ENV === "development") {
   provider = new DefenderRelayProvider(credentials, {});
 }
 
-export default new Web3(provider);
+export default new Web3Provider(provider);

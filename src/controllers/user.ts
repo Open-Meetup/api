@@ -3,7 +3,7 @@ import { generateMessageNonce, generateDigest } from "../utils/crypto";
 import type { User as IUser } from "../model/user";
 import { User } from "../services/db/user";
 
-export const add = async (
+export const create = async (
   req: Request<{}, {}, IUser>,
   res: Response<IUser | { error: string }>
 ) => {
@@ -31,7 +31,7 @@ export const add = async (
   }
 };
 
-export const edit = async (
+export const update = async (
   req: Request<{ wallet: string }, {}, Omit<IUser, "wallet">>,
   res: Response<IUser | { error: string }>
 ) => {
@@ -50,7 +50,7 @@ export const edit = async (
   }
 };
 
-export const getByAddress = async (
+export const readByAddress = async (
   req: Request<{ wallet: string }>,
   res: Response<IUser | { error: string }>
 ) => {
