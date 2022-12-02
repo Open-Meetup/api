@@ -2,16 +2,32 @@ import "dotenv/config";
 import fs from "fs";
 import path from "path";
 
-import Web3 from "web3";
+import { ethers } from "ethers";
 import HDWalletProvider from "@truffle/hdwallet-provider";
+import { Web3Provider } from "@ethersproject/providers";
 import { assertDefined } from "../src/utils/invariants";
-import organizationFactoryABI from "../src/services/contracts/organizationFactory/abi/organizationFactory";
+import factoryABI from "../src/services/contracts/factory/abi/factory";
+import communityABI from "../src/services/contracts/community/abi/community";
+import meetupABI from "../src/services/contracts/meetup/abi/meetup";
 
-const organizationFactoryBytecode = fs.readFileSync(
+const factoryBytecode = fs.readFileSync(
   path.join(
     __dirname,
-    "../src/services/contracts/organizationFactory/bytecode/organizationFactory.txt"
+    "../src/services/contracts/factory/bytecode/factory.txt"
   ),
+  "utf-8"
+);
+
+const communityBytecode = fs.readFileSync(
+  path.join(
+    __dirname,
+    "../src/services/contracts/community/bytecode/community.txt"
+  ),
+  "utf-8"
+);
+
+const meetupBytecode = fs.readFileSync(
+  path.join(__dirname, "../src/services/contracts/meetup/bytecode/meetup.txt"),
   "utf-8"
 );
 
@@ -26,27 +42,38 @@ const provider = new HDWalletProvider({
   providerOrUrl: GANACHE_URL || "http://criptup.ganache:8545",
 });
 
-const web3 = new Web3(provider);
+const web3 = new Web3Provider(provider);
 
 (async () => {
   try {
-    const [from] = await web3.eth.getAccounts();
+    const signer = await web3.getSigner();
 
-    const organizationFactoryContract = new web3.eth.Contract(
-      organizationFactoryABI,
-      undefined,
-      { from }
+    const communityContract = new ethers.ContractFactory(
+      communityABI,
+      communityBytecode,
+      signer
+    );
+    const community = await communityContract.deploy();
+
+    const meetupContract = new ethers.ContractFactory(
+      meetupABI,
+      meetupBytecode,
+      signer
+    );
+    const meetup = await meetupContract.deploy();
+
+    const factoryContract = new ethers.ContractFactory(
+      factoryABI,
+      factoryBytecode,
+      signer
+    );
+    const factory = await factoryContract.deploy(
+      community.address,
+      meetup.address
     );
 
-    const newContract = await organizationFactoryContract
-      .deploy({
-        data: organizationFactoryBytecode,
-      })
-      .send({
-        from,
-      });
-    console.log("\n\r> OrganizationFactory contract created:");
-    console.log(newContract.options.address);
+    console.log("\n\r> Factory contract created:");
+    console.log(factory.address);
   } catch (e) {
     console.error(e);
     console.error("\n\r> Contract creation failed!");

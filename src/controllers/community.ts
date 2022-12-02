@@ -3,7 +3,7 @@ import type {
   Community as ICommunity,
   CommunityPostRequest,
 } from "../model/community";
-import * as communityFactoryContract from "../services/contracts/communityFactory";
+import * as factoryContract from "../services/contracts/factory";
 import { Community } from "../services/db/community";
 
 export const readByAddress = async (
@@ -30,7 +30,7 @@ export const create = async (
   try {
     const community = new Community(req.body);
 
-    const contractHasBeenDeployed = await communityFactoryContract.exists(
+    const contractHasBeenDeployed = await factoryContract.existsCommunity(
       community.contractAddress
     );
 
