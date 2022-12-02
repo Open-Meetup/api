@@ -90,11 +90,11 @@ you will get a response like
 0x5b1869D9A4C187F2EAa108f3062412ecf0526b24
 ```
 
-##### Set Community Factory Address
+##### Set Factory Address
 
-You can set the community address in the `.env`
+You can set the factory address in the `.env`
 
 ```
-COMMUNITY_FACTORY_ADDRESS="0x5b1869D9A4C187F2EAa108f3062412ecf0526b24"
+FACTORY_ADDRESS="0x5b1869D9A4C187F2EAa108f3062412ecf0526b24"
 ```
 

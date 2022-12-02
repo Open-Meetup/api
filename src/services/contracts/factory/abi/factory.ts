@@ -7,6 +7,11 @@ const abiContract = [
         name: "_communityContractAddress",
         type: "address",
       },
+      {
+        internalType: "address",
+        name: "_meetupContractAddress",
+        type: "address",
+      },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
@@ -22,6 +27,19 @@ const abiContract = [
       },
     ],
     name: "NewCommunity",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "newMeetup",
+        type: "address",
+      },
+    ],
+    name: "NewMeetup",
     type: "event",
   },
   {
@@ -61,7 +79,6 @@ const abiContract = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
   {
     inputs: [],
@@ -75,7 +92,6 @@ const abiContract = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
   {
     inputs: [],
@@ -89,7 +105,32 @@ const abiContract = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
+  },
+  {
+    inputs: [],
+    name: "meetupContractAddress",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "meetupCreationCost",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [],
@@ -103,7 +144,6 @@ const abiContract = [
     ],
     stateMutability: "view",
     type: "function",
-    constant: true,
   },
   {
     inputs: [],
@@ -154,6 +194,38 @@ const abiContract = [
   {
     inputs: [
       {
+        internalType: "string",
+        name: "_name",
+        type: "string",
+      },
+    ],
+    name: "createCommunity",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_communityAddress",
+        type: "address",
+      },
+    ],
+    name: "existsCommunity",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "address",
         name: "_receiver",
         type: "address",
@@ -167,36 +239,56 @@ const abiContract = [
   {
     inputs: [
       {
-        internalType: "string",
-        name: "_name",
-        type: "string",
+        internalType: "uint256",
+        name: "_price",
+        type: "uint256",
       },
     ],
-    name: "createCommunity",
+    name: "setMeetupCreationCost",
     outputs: [],
-    stateMutability: "payable",
+    stateMutability: "nonpayable",
     type: "function",
-    payable: true,
   },
   {
     inputs: [
       {
         internalType: "address",
-        name: "_communityAddress",
+        name: "_meetupContractAddress",
         type: "address",
       },
     ],
-    name: "exists",
-    outputs: [
+    name: "setMeetupContractAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
+        internalType: "string",
+        name: "_meetupName",
+        type: "string",
+      },
+      {
+        internalType: "contract Community",
+        name: "_community",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "_meetupStartDate",
+        type: "uint256",
+      },
+      {
+        internalType: "address[]",
+        name: "_meetupOrganizers",
+        type: "address[]",
       },
     ],
-    stateMutability: "view",
+    name: "createMeetup",
+    outputs: [],
+    stateMutability: "payable",
     type: "function",
-    constant: true,
   },
 ];
 

@@ -12,7 +12,6 @@ export const getAll = async (req: Request, res: Response) => {
   }
 };
 
-// get a meetup by arweave transaction id
 export const getById = async (req: Request<{ id: string }>, res: Response) => {
   try {
     return res.status(200).json({});
