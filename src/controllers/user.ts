@@ -38,7 +38,9 @@ export const update = async (
   const { wallet } = req.params;
   // find user
   try {
-    const user = await User.findOneAndUpdate({ wallet }, req.body).exec();
+    const user = await User.findOneAndUpdate({ wallet }, req.body, {
+      new: true,
+    }).exec();
     if (!user) {
       return res.status(404).send();
     }
